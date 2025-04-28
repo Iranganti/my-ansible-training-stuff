@@ -1,2 +1,2 @@
 # my-ansible-training-stuff
-This is my personal place where i place all of my stuff while am learning ansible.. 
+This is the git repo where I place all my files while am doing my ansible course.
