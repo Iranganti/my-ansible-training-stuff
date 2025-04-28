@@ -1,0 +1,10 @@
+- hosts: zoidberg
+  tasks:
+    - name: Install packages (incorrect)
+      become: true
+      package:
+        name:
+          - sl
+          - cmatrix
+        state: present
+
