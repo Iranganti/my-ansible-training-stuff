@@ -5,6 +5,9 @@ read -p "Enter commit message: " commit_message
 
 # Run commands
 cp * ~/mycode/all_files
+shopt -s extglob
+cp -r !(mycode) ~/mycode/all_files
+shopt -u extglob
 cd ~/mycode
 git status
 git add /home/student/mycode/*
