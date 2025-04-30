@@ -1,0 +1,9 @@
+---
+- name: Execute the challenge_challenge role
+  hosts: localhost
+  connection: local
+  gather_facts: no
+
+  roles:
+    - challenge_challenge
+
