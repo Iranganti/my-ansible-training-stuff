@@ -11,4 +11,3 @@ git add /home/student/mycode/*
 git commit -m "$commit_message"
 git push origin
 cd ~/
-
