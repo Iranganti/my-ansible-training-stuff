@@ -1,0 +1,20 @@
+---
+- name: Ensure /tmp/challenge_dir/ exists
+  ansible.builtin.file:
+    path: "{{ file_path }}"
+    state: directory
+
+- name: Create a file in /tmp/challenge_dir with content from a variable
+  ansible.builtin.copy:
+    dest: "{{ file_path }}{{ file_name }}"
+    content: "{{ file_content }}"
+
+- name: Display the content of the file
+  ansible.builtin.command:
+    cmd: "cat {{ file_path }}{{ file_name }}"
+  register: cat_output
+
+- name: Show file content
+  ansible.builtin.debug:
+    msg: "The file content is: '{{ cat_output.stdout }}'"
+
