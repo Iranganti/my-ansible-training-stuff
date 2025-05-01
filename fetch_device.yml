@@ -1,0 +1,17 @@
+---
+- name: Fetch a specific device
+  hosts: localhost
+  gather_facts: no
+
+  tasks:
+    - name: Get a specific device from the API
+      ansible.builtin.uri:
+        url: "http://localhost:5000/devices/1"
+        method: GET
+        return_content: yes
+      register: result
+
+    - name: Display device details
+      debug:
+        var: result.json
+

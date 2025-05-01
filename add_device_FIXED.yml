@@ -1,0 +1,25 @@
+---
+- name: Add a new device
+  hosts: localhost
+  gather_facts: no
+
+  tasks:
+    - name: Add a device to the API
+      ansible.builtin.uri:
+        url: "http://localhost:5000/devices"
+        method: POST
+        status_code: 201  # <-- NEW! Here we are telling uri we expect to get a 201
+        headers:
+          Content-Type: "application/json"
+        body: |
+          {
+            "name": "Router2",
+            "ip": "10.0.0.2"
+          }
+        body_format: json
+      register: result
+
+    - name: Confirm device addition
+      debug:
+        var: result.json
+
