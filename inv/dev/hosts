@@ -31,5 +31,5 @@ ansible_network_os=eos
 
 
 [redfish]
-Redfish     baseuri=aux1-YOURS-GOES-HERE.live.alta3.com username=root password=null
+Redfish     baseuri=aux1-b989043d-2402-49ee-ae54-2a167a0ea3f2.live.alta3.com username=root password=null
 
