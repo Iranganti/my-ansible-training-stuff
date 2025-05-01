@@ -1,0 +1,58 @@
+---
+- name: Create a session and token to use
+  hosts: redfish
+  connection: local
+  gather_facts: false
+
+  collections:
+    - community.general
+
+  tasks:
+    - name: Create session
+      community.general.redfish_command:
+        category: Sessions
+        command: CreateSession
+        baseuri: "{{ baseuri }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+      register: result
+
+    - name: Show results of the session
+      debug:
+        var: result
+
+    - name: Pause to reflect on session and token information
+      pause:
+
+    - name: Get Redfish info using token
+      community.general.redfish_info:
+        auth_token: "{{ result.session.token }}"
+        baseuri: "{{ baseuri }}"
+      register: results
+
+    - name: Show Redfish info gathered
+      debug:
+        var: results
+
+    - name: Pause before we blink the server LED
+      pause:
+
+    - name: Set chassis indicator LED to blink using session token
+      community.general.redfish_command:
+        category: Chassis
+        command: IndicatorLedBlink
+        resource_id: 1U
+        baseuri: "{{ baseuri }}"
+        auth_token: "{{ result.session.token }}"
+
+    - name: Take a moment to appreciate that in some datacenter somewhere, a server's light is blinking!
+      pause:
+
+    - name: Delete the session
+      community.general.redfish_command:
+        category: Sessions
+        command: DeleteSession
+        baseuri: "{{ baseuri }}"
+        auth_token: "{{ result.session.token }}"
+        session_uri: "{{ result.session.uri }}"
+
