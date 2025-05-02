@@ -1,0 +1,12 @@
+---
+- name: Remove block from example.conf
+  hosts: rhel_nodes
+  become: yes
+
+  tasks:
+    - name: Delete the previously added block
+      blockinfile:
+        path: /etc/example.conf
+        marker: "# {mark} ANSIBLE CUSTOM BLOCK"
+        state: absent
+ 

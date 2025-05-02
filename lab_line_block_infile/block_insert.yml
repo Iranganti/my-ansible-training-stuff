@@ -1,0 +1,21 @@
+---
+- name: Insert a custom block into example.conf
+  hosts: rhel_nodes
+  become: yes
+
+  tasks:
+    - name: Ensure config file exists
+      file:
+        path: /etc/example.conf
+        state: touch
+        mode: '0644'
+
+    - name: Insert initial block
+      blockinfile:
+        path: /etc/example.conf
+        marker: "# {mark} ANSIBLE CUSTOM BLOCK"
+        block: |
+          [custom]
+          enabled = true
+          path = /opt/tools
+

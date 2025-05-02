@@ -1,0 +1,15 @@
+---
+- name: Update existing block in example.conf
+  hosts: rhel_nodes
+  become: yes
+
+  tasks:
+    - name: Replace contents of existing block
+      blockinfile:
+        path: /etc/example.conf
+        marker: "# {mark} ANSIBLE CUSTOM BLOCK"
+        block: |
+          [custom]
+          enabled = false
+          path = /opt/newtools
+

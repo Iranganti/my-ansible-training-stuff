@@ -1,0 +1,13 @@
+---
+- name: Add welcome line to /etc/motd
+  hosts: rhel_nodes
+  become: yes
+
+  tasks:
+    - name: Insert message to top of motd
+      lineinfile:
+        path: /etc/motd
+        line: "Welcome to your RHCE lab environment"
+        insertbefore: BOF
+        create: yes
+

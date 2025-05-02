@@ -1,0 +1,19 @@
+---
+- name: Conditionally update sudoers
+  hosts: rhel_nodes
+  become: yes
+
+  tasks:
+    - name: Check if sudoers file exists
+      stat:
+        path: /etc/sudoers
+      register: sudoers_file
+
+    - name: Ensure %wheel group rule is present
+      lineinfile:
+        path: /etc/sudoers
+        regexp: '^%wheel'
+        line: '%wheel ALL=(ALL) ALL'
+        validate: 'visudo -cf %s'
+      when: sudoers_file.stat.exists
+
