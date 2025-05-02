@@ -1,0 +1,12 @@
+---
+- name: Remove bart's cron job
+  hosts: rhel_nodes
+  become: yes
+
+  tasks:
+    - name: Remove the log_ay_caramba cron entry
+      cron:
+        name: log_ay_caramba
+        user: bart
+        state: absent
+

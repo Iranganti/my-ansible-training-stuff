@@ -1,0 +1,25 @@
+---
+- name: Manage cron job for user bart
+  hosts: rhel_nodes
+  become: yes
+
+  tasks:
+    - name: Ensure user bart exists
+      user:
+        name: bart
+        state: present
+
+    - name: Schedule a cron job to append "Ay caramba!" with timestamp
+      cron:
+        name: log_ay_caramba
+        user: bart
+        minute: "*"
+        job: 'echo "$(date): Ay caramba!" >> /home/bart/cron.log'
+
+    - name: Schedule a cron job to append "Eat my shorts!" with timestamp
+      cron:
+        name: log_ay_caramba
+        user: bart
+        minute: "*"
+        job: 'echo "$(date): Eat my shorts!" >> /home/bart/cron.log'
+
