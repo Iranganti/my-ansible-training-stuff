@@ -1,0 +1,23 @@
+---
+- name: Schedule a one-time task using at
+  hosts: rhel_nodes
+  become: yes
+
+  tasks:
+    - name: Ensure at package is installed
+      dnf:
+        name: at
+        state: present
+
+    - name: Ensure atd service is enabled and running
+      service:
+        name: atd
+        state: started
+        enabled: yes
+
+    - name: Schedule writing a file 1 minute from now
+      at:
+        command: echo 'Hello from the future!' >> /tmp/future_message.txt
+        count: 1
+        units: minutes
+

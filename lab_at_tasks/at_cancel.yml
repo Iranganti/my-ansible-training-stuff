@@ -1,0 +1,17 @@
+---
+- name: Schedule and cancel an at job
+  hosts: rhel_nodes
+  become: yes
+
+  tasks:
+    - name: Schedule a second job
+      at:
+        command: 'echo "This should never run" >> /home/bart/at.log'
+        count: 2
+        units: minutes
+      register: job_result
+
+    - name: Cancel the at job (best effort)
+      shell: "atq | awk '{print $1}' | xargs -r atrm"
+      when: job_result is defined
+
